@@ -1,0 +1,40 @@
+{
+  "name": "sickdaflip/magento_richsnippets",
+  "type": "magento-module",
+  "license": "MIT",
+  "description": "Google Richsnippets for Magento 1.9.3.",
+  "authors": [
+    {
+      "name": "SickDaFlip",
+      "email": "philippbreitsprecher@gmail.com"
+    }
+  ],
+  "extra": {
+    "map": [
+      [
+        "app/code/local/*",
+        "app/code/local/"
+      ],
+      [
+        "app/design/frontend/base/default/layout/richsnippets.xml",
+        "app/design/frontend/base/default/layout/richsnippets.xml"
+      ],
+      [
+        "app/design/frontend/base/default/template/*",
+        "app/design/frontend/base/default/template/"
+      ],
+      [
+        "app/etc/modules/Creativestyle_Richsnippets.xml",
+        "app/etc/modules/Creativestyle_Richsnippets.xml"
+      ],
+      [
+        "app/locale/de_DE/*",
+        "app/locale/de_DE/"
+      ],
+      [
+        "app/locale/en_US/*",
+        "app/locale/en_US/"
+      ]
+    ]
+  }
+}
