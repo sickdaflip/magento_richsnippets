@@ -101,7 +101,7 @@ class Creativestyle_Richsnippets_Block_Jsonld extends Mage_Core_Block_Template
                 $descsnippet = Mage::helper('core/string')->substr(html_entity_decode(strip_tags($product->getDescription())), 0, 165);
             }
 
-            // Final array with all basic product data
+            // Final array with all basic product data --->
             $tierPrices = array();
             $tierInfo = $product->getTierPrice();
 
