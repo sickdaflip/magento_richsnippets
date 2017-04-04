@@ -133,6 +133,9 @@ class Creativestyle_Richsnippets_Block_Jsonld extends Mage_Core_Block_Template
                 'url' => $product->getProductUrl(),
                 //'description' => trim(preg_replace('/\s+/', ' ', $this->stripTags($product->getShortDescription()))),
                 'description' => $descsnippet, //use Desc if Shortdesc not work
+                'weight' => $product->getAttributeText('weight'),
+                'brand' => $product->getAttributeText('manufacturer'),
+                'itemCondition' => $product->getAttributeText('condition'),
                 'offers' => array(
                     '@type' => 'Offer',
                     'availability' => $json['availability'],
