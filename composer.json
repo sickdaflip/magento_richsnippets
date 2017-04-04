@@ -12,8 +12,8 @@
   "extra": {
     "map": [
       [
-        "app/code/local/*",
-        "app/code/local/"
+        "app/code/local/Creativestyle/*",
+        "app/code/local/Creativestyle/"
       ],
       [
         "app/design/frontend/base/default/layout/richsnippets.xml",
