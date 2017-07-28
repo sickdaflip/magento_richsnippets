@@ -116,14 +116,22 @@ class Creativestyle_Richsnippets_Block_Jsonld extends Mage_Core_Block_Template
             foreach ($tierInfo as $tierPrice) {
                 array_push($tierPrices, $tierPrice['price']);
             }
-            $minTier = min($tierPrices);
+            if ($tierPrices) {
+                $minTier = min($tierPrices);
+            } else {
+                $minTier = false;
+            }
 
             if ($minTier == false) {
                 $price_raw = Mage::helper('tax')->getPrice($product, $product->getFinalPrice(), true, null, null, null, 5);
             } else {
                 $price_raw = Mage::helper('tax')->getPrice($product, $minTier, true, null, null, null, 5);
             }
-            $skonto = $price_raw * 97 / 100;
+            if (!empty($product->getAttributeText('manufacturer')) && $product->getAttributeText('manufacturer') == 'Unox'){
+                $skonto = $price_raw;
+            }else {
+                $skonto = $price_raw * 97 / 100;
+            }
             $data = array(
                 '@context' => 'http://schema.org',
                 '@type' => 'Product',
