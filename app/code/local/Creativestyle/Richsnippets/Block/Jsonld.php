@@ -122,16 +122,19 @@ class Creativestyle_Richsnippets_Block_Jsonld extends Mage_Core_Block_Template
                 $minTier = false;
             }
 
+
+            $valueAddedTaxIncluded = "true";
             if ($minTier == false) {
                 $price_raw = Mage::helper('tax')->getPrice($product, $product->getFinalPrice(), true, null, null, null, 5);
             } else {
                 $price_raw = Mage::helper('tax')->getPrice($product, $minTier, true, null, null, null, 5);
             }
-            if (!empty($product->getAttributeText('manufacturer')) && $product->getAttributeText('manufacturer') == 'Unox'){
+            if (!empty($product->getAttributeText('manufacturer')) && $product->getAttributeText('manufacturer') == 'Unox') {
                 $skonto = $price_raw;
-            }else {
+            } else {
                 $skonto = $price_raw * 97 / 100;
             }
+
             $data = array(
                 '@context' => 'http://schema.org',
                 '@type' => 'Product',
@@ -149,6 +152,7 @@ class Creativestyle_Richsnippets_Block_Jsonld extends Mage_Core_Block_Template
                     'availability' => $json['availability'],
                     //'price' => number_format((float)$product->getFinalPrice(), 2, '.', ''),
                     'price' => number_format((float)$skonto, 2, '.', ''),
+                    'valueAddedTaxIncluded' => $valueAddedTaxIncluded,
                     'priceCurrency' => $currencyCode,
                     'category' => $json['category']
                 )
