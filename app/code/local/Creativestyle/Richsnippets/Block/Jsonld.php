@@ -122,8 +122,6 @@ class Creativestyle_Richsnippets_Block_Jsonld extends Mage_Core_Block_Template
                 $minTier = false;
             }
 
-
-            $valueAddedTaxIncluded = "true";
                 $price_raw = Mage::helper('tax')->getPrice($product, $product->getFinalPrice(), true, null, null, null, 5);
 
             if (!empty($product->getAttributeText('manufacturer')) && $product->getAttributeText('manufacturer') == 'Unox') {
@@ -149,7 +147,6 @@ class Creativestyle_Richsnippets_Block_Jsonld extends Mage_Core_Block_Template
                     'availability' => $json['availability'],
                     //'price' => number_format((float)$product->getFinalPrice(), 2, '.', ''),
                     'price' => number_format((float)$skonto, 2, '.', ''),
-                    'valueAddedTaxIncluded' => $valueAddedTaxIncluded,
                     'priceCurrency' => $currencyCode,
                     'category' => $json['category']
                 )
