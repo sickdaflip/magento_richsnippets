@@ -124,11 +124,8 @@ class Creativestyle_Richsnippets_Block_Jsonld extends Mage_Core_Block_Template
 
 
             $valueAddedTaxIncluded = "true";
-            if ($minTier == false) {
                 $price_raw = Mage::helper('tax')->getPrice($product, $product->getFinalPrice(), true, null, null, null, 5);
-            } else {
-                $price_raw = Mage::helper('tax')->getPrice($product, $minTier, true, null, null, null, 5);
-            }
+
             if (!empty($product->getAttributeText('manufacturer')) && $product->getAttributeText('manufacturer') == 'Unox') {
                 $skonto = $price_raw;
             } else {
