@@ -123,11 +123,10 @@ class Creativestyle_Richsnippets_Block_Jsonld extends Mage_Core_Block_Template
             }
 
             //if (in_array($product->getId(), array(32145,28796,28638,28637,28636,28635,21094,21115,21096,21112,21093,21113,32248,32235,21098,21121,20836))) {
-                $price_raw = Mage::helper('tax')->getPrice($product, $product->getFinalPrice(), false, null, null, null, 5);
+            $price_raw = Mage::helper('tax')->getPrice($product, $product->getFinalPrice(), false, null, null, null, 5);
             //} else {
             //    $price_raw = Mage::helper('tax')->getPrice($product, $product->getFinalPrice(), true, null, null, null, 5);
             //}
-
 
 
             if (!empty($product->getAttributeText('manufacturer')) && $product->getAttributeText('manufacturer') == 'Unox') {
@@ -152,10 +151,14 @@ class Creativestyle_Richsnippets_Block_Jsonld extends Mage_Core_Block_Template
                     '@type' => 'Offer',
                     'availability' => $json['availability'],
                     //'price' => number_format((float)$product->getFinalPrice(), 2, '.', ''),
-                    'price' => number_format((float)$skonto, 2, '.', ''),
-                    'valueAddedTaxIncluded' => 'false',
-                    'priceCurrency' => $currencyCode,
-                    'category' => $json['category']
+                    'category' => $json['category'],
+                    'PriceSpecification' => array(
+                        '@type' => 'PriceSpecification',
+                        'priceCurrency' => 'EUR',
+                        'valueAddedTaxIncluded' => 'false',
+                        'price' => number_format((float)$skonto, 2, '.', ''),
+                        'priceCurrency' => $currencyCode
+                    )
                 )
             );
 
