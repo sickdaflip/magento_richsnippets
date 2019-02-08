@@ -151,6 +151,7 @@ class Creativestyle_Richsnippets_Block_Jsonld extends Mage_Core_Block_Template
                     '@type' => 'Offer',
                     'availability' => $json['availability'],
                     //'price' => number_format((float)$product->getFinalPrice(), 2, '.', ''),
+                    'priceCurrency' => $currencyCode,
                     'category' => $json['category'],
                     'PriceSpecification' => array(
                         '@type' => 'PriceSpecification',
