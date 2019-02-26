@@ -135,12 +135,20 @@ class Creativestyle_Richsnippets_Block_Jsonld extends Mage_Core_Block_Template
                 $skonto = $price_raw * 97 / 100;
             }
 
+            $gallery_images = Mage::getModel('catalog/product')->load($product->getId())->getMediaGalleryImages();
+
+            $gallery_i = array();
+
+            foreach ($gallery_images as $g_image) {
+                $gallery_i[] = $g_image['url'];
+            }
+
             $data = array(
                 '@context' => 'http://schema.org',
                 '@type' => 'Product',
                 'name' => $product->getName(),
                 'sku' => $product->getSku(),
-                'image' => $product->getImageUrl(),
+                'image' => implode(', ', $gallery_i),
                 'url' => $product->getProductUrl(),
                 //'description' => trim(preg_replace('/\s+/', ' ', $this->stripTags($product->getShortDescription()))),
                 'description' => $descsnippet, //use Desc if Shortdesc not work
@@ -150,7 +158,7 @@ class Creativestyle_Richsnippets_Block_Jsonld extends Mage_Core_Block_Template
                 'offers' => array(
                     '@type' => 'Offer',
                     'availability' => $json['availability'],
-                    //'price' => number_format((float)$product->getFinalPrice(), 2, '.', ''),
+                    'price' => number_format((float)$skonto, 2, '.', ''),
                     'priceCurrency' => $currencyCode,
                     'category' => $json['category'],
                     'PriceSpecification' => array(
