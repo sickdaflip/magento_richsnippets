@@ -122,7 +122,13 @@ class Creativestyle_Richsnippets_Block_Jsonld extends Mage_Core_Block_Template
                 $minTier = false;
             }
 
-            $price_raw = Mage::helper('tax')->getPrice($product, $product->getFinalPrice(), false, null, null, null, 5);
+            $price_raw = Mage::helper('tax')->getPrice($product, $product->getFinalPrice(), true, null, null, null, $storeId, null, true);
+
+            if ($storeId == 5) {
+                $valueAddedTaxIncluded = 'true';
+            } else {
+                $valueAddedTaxIncluded = 'false';
+            }
 
             $gallery_images = Mage::getModel('catalog/product')->load($product->getId())->getMediaGalleryImages();
 
@@ -153,7 +159,7 @@ class Creativestyle_Richsnippets_Block_Jsonld extends Mage_Core_Block_Template
                     'PriceSpecification' => array(
                         '@type' => 'PriceSpecification',
                         'priceCurrency' => 'EUR',
-                        'valueAddedTaxIncluded' => 'false',
+                        'valueAddedTaxIncluded' => $valueAddedTaxIncluded,
                         'price' => $price_raw,
                         'priceCurrency' => $currencyCode
                     )
