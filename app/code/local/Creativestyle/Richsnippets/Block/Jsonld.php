@@ -89,7 +89,9 @@ class Creativestyle_Richsnippets_Block_Jsonld extends Mage_Core_Block_Template
                 }
 
                 // let's put review data into $json array
+
                 $json['reviewCount'] = $reviewSummary->getTotalReviews($product->getId(), true);
+
                 $json['ratingValue'] = number_format(floor(($ratingData['rating_summary'] / 20) * 2) / 2, 1); // average rating (1-5 range)
                 $json['review'] = $reviewData;
             }
@@ -122,6 +124,8 @@ class Creativestyle_Richsnippets_Block_Jsonld extends Mage_Core_Block_Template
                 $minTier = false;
             }
 
+            $priceValidUntil = date("c", strtotime("+1 day"));
+
             $price_raw = Mage::helper('tax')->getPrice($product, $product->getFinalPrice(), true, null, null, null, $storeId, null, true);
 
             if ($storeId == 5) {
@@ -143,12 +147,16 @@ class Creativestyle_Richsnippets_Block_Jsonld extends Mage_Core_Block_Template
                 '@type' => 'Product',
                 'name' => $product->getName(),
                 'sku' => $product->getSku(),
+                'mpn' => substr(strstr(Mage::getModel('catalog/product')->load($product->getId())->getSku(),"-",false),1),
+                'gtin' => $product->getData('gtin'),
                 'image' => implode(', ', $gallery_i),
                 'url' => $product->getProductUrl(),
-                //'description' => trim(preg_replace('/\s+/', ' ', $this->stripTags($product->getShortDescription()))),
                 'description' => $descsnippet, //use Desc if Shortdesc not work
                 'weight' => $product->getAttributeText('weight'),
-                'brand' => $product->getAttributeText('manufacturer'),
+                'brand' => array(
+                    '@type' => 'Thing',
+                    'name' => $product->getAttributeText('manufacturer')
+                ),
                 'itemCondition' => $product->getAttributeText('condition'),
                 'offers' => array(
                     '@type' => 'Offer',
@@ -156,6 +164,8 @@ class Creativestyle_Richsnippets_Block_Jsonld extends Mage_Core_Block_Template
                     'price' => $price_raw,
                     'priceCurrency' => $currencyCode,
                     'category' => $json['category'],
+                    'priceValidUntil' => $priceValidUntil,
+                    'url' => $product->getProductUrl(),
                     'PriceSpecification' => array(
                         '@type' => 'PriceSpecification',
                         'priceCurrency' => 'EUR',
