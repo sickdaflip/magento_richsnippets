@@ -166,7 +166,6 @@ class Creativestyle_Richsnippets_Block_Jsonld extends Mage_Core_Block_Template
                         '@type' => 'PriceSpecification',
                         'priceCurrency' => 'EUR',
                         'valueAddedTaxIncluded' => $valueAddedTaxIncluded,
-                        'price' => $price_raw,
                         'priceCurrency' => $currencyCode
                     )
                 )
