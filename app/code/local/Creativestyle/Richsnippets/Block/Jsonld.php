@@ -126,9 +126,13 @@ class Creativestyle_Richsnippets_Block_Jsonld extends Mage_Core_Block_Template
 
             $priceValidUntil = date("c", strtotime("+1 day"));
 
-            $price_raw = Mage::helper('tax')->getPrice($product, $product->getFinalPrice(), true, null, null, null, 5, null, true);
-
-             $valueAddedTaxIncluded = 'true';
+            if ($product->getAttributeText('price_richsnippet') == 'netto') {
+                $price_raw = Mage::helper('tax')->getPrice($product, $product->getFinalPrice(), false, null, null, null, 5, null, true);
+                $valueAddedTaxIncluded = "false";
+            } else {
+                $price_raw = Mage::helper('tax')->getPrice($product, $product->getFinalPrice(), true, null, null, null, 5, null, true);
+                $valueAddedTaxIncluded = "true";
+            }
 
             $gallery_images = Mage::getModel('catalog/product')->load($product->getId())->getMediaGalleryImages();
 
