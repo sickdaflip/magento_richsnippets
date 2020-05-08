@@ -160,7 +160,7 @@ class Creativestyle_Richsnippets_Block_Jsonld extends Mage_Core_Block_Template
                 'itemCondition' => $product->getAttributeText('condition'),
                 'offers' => array(
                     '@type' => 'Offer',
-                    'availability' => $json['availability'],
+                    'availability' => $product->getAttributeText('stock_richsnippet') == 'anzeigen' ? $json['availability']:,
                     'price' => $price_raw,
                     'priceCurrency' => $currencyCode,
                     'category' => $json['category'],
