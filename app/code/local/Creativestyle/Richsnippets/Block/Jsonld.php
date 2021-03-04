@@ -126,21 +126,9 @@ class Creativestyle_Richsnippets_Block_Jsonld extends Mage_Core_Block_Template
 
             $priceValidUntil = date("c", strtotime("+1 day"));
 
-            if ($product->getAttributeText('price_richsnippet') == 'netto') {
-                $price_raw = Mage::helper('tax')->getPrice($product, $product->getFinalPrice(), false, null, null, null, 5, null, true);
-                $valueAddedTaxIncluded = "false";
-            } else {
-                $price_raw = Mage::helper('tax')->getPrice($product, $product->getFinalPrice(), true, null, null, null, 5, null, true);
-                $valueAddedTaxIncluded = "true";
-            }
+            $price_raw = Mage::helper('tax')->getPrice($product, $product->getFinalPrice(), true, null, null, null, 5, null, true);
 
-            $gallery_images = Mage::getModel('catalog/product')->load($product->getId())->getMediaGalleryImages();
-
-            $gallery_i = array();
-
-            foreach ($gallery_images as $g_image) {
-                $gallery_i[] = $g_image['url'];
-            }
+            $valueAddedTaxIncluded = 'true';
 
             $data = array(
                 '@context' => 'http://schema.org',
@@ -149,7 +137,7 @@ class Creativestyle_Richsnippets_Block_Jsonld extends Mage_Core_Block_Template
                 'sku' => $product->getSku(),
                 'mpn' => substr(strstr(Mage::getModel('catalog/product')->load($product->getId())->getSku(),"-",false),1),
                 'gtin' => $product->getData('gtin'),
-                'image' => implode(', ', $gallery_i),
+                'image' => $product->getImageUrl(),
                 'url' => $product->getProductUrl(),
                 'description' => $descsnippet, //use Desc if Shortdesc not work
                 'weight' => $product->getAttributeText('weight'),
@@ -160,7 +148,7 @@ class Creativestyle_Richsnippets_Block_Jsonld extends Mage_Core_Block_Template
                 'itemCondition' => $product->getAttributeText('condition'),
                 'offers' => array(
                     '@type' => 'Offer',
-                    'availability' => $product->getAttributeText('stock_richsnippet') == 'anzeigen' ? $json['availability']:,
+                    'availability' => $json['availability'],
                     'price' => $price_raw,
                     'priceCurrency' => $currencyCode,
                     'category' => $json['category'],
